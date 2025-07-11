@@ -5134,7 +5134,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4986672822543416430, guid: b7276f309474eaf49a62fbc5f2e8cf20,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 535623039}
   m_SourcePrefab: {fileID: 100100000, guid: b7276f309474eaf49a62fbc5f2e8cf20, type: 3}
 --- !u!20 &535623033 stripped
 Camera:
@@ -5160,6 +5164,29 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 535623032}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &535623039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535623035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3bfc41777a67346a48fff10ace7fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  sprintMultiplier: 1.5
+  mouseSensitivity: 2
+  gravity: -9.81
+  cameraTransform: {fileID: 535623036}
+  zoomSpeed: 5
+  minZoom: 2
+  maxZoom: 10
+  defaultZoom: 5
+  rollSpeed: 90
+  rollReturnSpeed: 180
 --- !u!43 &542927525
 Mesh:
   m_ObjectHideFlags: 0
@@ -19670,7 +19697,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 198434912292960577, guid: 4c893cb4891a2514c840ec42a8fc8e9a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1402117831}
   m_SourcePrefab: {fileID: 100100000, guid: 4c893cb4891a2514c840ec42a8fc8e9a, type: 3}
 --- !u!20 &1402117824 stripped
 Camera:
@@ -19690,6 +19721,35 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1402117823}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1402117827 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6822829809898528994, guid: 4c893cb4891a2514c840ec42a8fc8e9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1402117823}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1402117831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402117826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3bfc41777a67346a48fff10ace7fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  sprintMultiplier: 1.5
+  mouseSensitivity: 2
+  gravity: -9.81
+  cameraTransform: {fileID: 1402117827}
+  zoomSpeed: 5
+  minZoom: 2
+  maxZoom: 10
+  defaultZoom: 5
+  rollSpeed: 90
+  rollReturnSpeed: 180
 --- !u!43 &1404657221
 Mesh:
   m_ObjectHideFlags: 0
