@@ -5071,6 +5071,16 @@ PrefabInstance:
       propertyPath: m_ClearFlags
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4332680287430768162, guid: b7276f309474eaf49a62fbc5f2e8cf20,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332680287430768162, guid: b7276f309474eaf49a62fbc5f2e8cf20,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4986672822543416430, guid: b7276f309474eaf49a62fbc5f2e8cf20,
         type: 3}
       propertyPath: m_Name
@@ -5080,6 +5090,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795327419527843015, guid: b7276f309474eaf49a62fbc5f2e8cf20,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8350187150351009400, guid: b7276f309474eaf49a62fbc5f2e8cf20,
         type: 3}
@@ -5138,7 +5153,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4986672822543416430, guid: b7276f309474eaf49a62fbc5f2e8cf20,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 535623039}
+      addedObject: {fileID: 535623043}
+    - targetCorrespondingSourceObject: {fileID: 4986672822543416430, guid: b7276f309474eaf49a62fbc5f2e8cf20,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 535623044}
+    - targetCorrespondingSourceObject: {fileID: 4986672822543416430, guid: b7276f309474eaf49a62fbc5f2e8cf20,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 535623045}
   m_SourcePrefab: {fileID: 100100000, guid: b7276f309474eaf49a62fbc5f2e8cf20, type: 3}
 --- !u!20 &535623033 stripped
 Camera:
@@ -5164,7 +5187,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 535623032}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &535623039
+--- !u!114 &535623043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5173,20 +5196,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 535623035}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec3bfc41777a67346a48fff10ace7fc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 329f4565921044c32b4218b09f22153a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  sprintMultiplier: 1.5
-  mouseSensitivity: 2
-  gravity: -9.81
-  cameraTransform: {fileID: 535623036}
-  zoomSpeed: 5
-  minZoom: 2
-  maxZoom: 10
-  defaultZoom: 5
-  rollSpeed: 90
-  rollReturnSpeed: 180
+  MoveSpeed: 5
+  SprintMultiplier: 1.5
+  Gravity: -9.81
+  CameraTransform: {fileID: 535623036}
+  MouseSensitivity: 2
+--- !u!114 &535623044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535623035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0179f66034c4f05a3ffabd37c07ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraTransform: {fileID: 1495165564}
+  PlayerCamera: {fileID: 535623033}
+  SpyGlassPrefab: {fileID: 3995758853228247841, guid: 0522ad3c8168645bf941a3e6547fa19d,
+    type: 3}
+  HeldOffset: {x: 0.05, y: -0.05, z: 0.25}
+  RaiseSpeed: 10
+  ZoomSpeed: 5
+--- !u!114 &535623045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535623035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2ac455dfb97462ba70ea324084495c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraTransform: {fileID: 535623036}
+  RollSpeed: 90
+  RollReturnSpeed: 180
 --- !u!43 &542927525
 Mesh:
   m_ObjectHideFlags: 0
@@ -19697,11 +19748,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 198434912292960577, guid: 4c893cb4891a2514c840ec42a8fc8e9a,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1402117831}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c893cb4891a2514c840ec42a8fc8e9a, type: 3}
 --- !u!20 &1402117824 stripped
 Camera:
@@ -19721,35 +19768,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1402117823}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1402117827 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6822829809898528994, guid: 4c893cb4891a2514c840ec42a8fc8e9a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1402117823}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1402117831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402117826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec3bfc41777a67346a48fff10ace7fc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  sprintMultiplier: 1.5
-  mouseSensitivity: 2
-  gravity: -9.81
-  cameraTransform: {fileID: 1402117827}
-  zoomSpeed: 5
-  minZoom: 2
-  maxZoom: 10
-  defaultZoom: 5
-  rollSpeed: 90
-  rollReturnSpeed: 180
 --- !u!43 &1404657221
 Mesh:
   m_ObjectHideFlags: 0
@@ -22440,6 +22458,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 25495032}
   m_LocalEulerAnglesHint: {x: 0, y: -270, z: -90}
+--- !u!4 &1495165564 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9018589036932528708, guid: b7276f309474eaf49a62fbc5f2e8cf20,
+    type: 3}
+  m_PrefabInstance: {fileID: 535623032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1540508903
 Mesh:
   m_ObjectHideFlags: 0
