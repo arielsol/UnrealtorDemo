@@ -15,10 +15,10 @@ public class PlayerController : MonoBehaviour
     private bool inverted = false;
 
     [Header("Extra Camera Controls")]
-    public float zoomSpeed = 5f;
-    public float minZoom = 2f;
-    public float maxZoom = 10f;
-    public float defaultZoom = 5f; // Target distance when RMB is not held
+    [SerializeField] private Camera playerCam;
+    public float defaultFOV = 60f;
+    public float zoomFOV = 40f;
+    public float fovZoomSpeed = 10f;
 
     public float rollSpeed = 90f;     // Degrees per second
     public float rollReturnSpeed = 180f; // Speed when returning to upright
@@ -100,19 +100,13 @@ public class PlayerController : MonoBehaviour
     {
         inverted = !inverted;
     }
-
     void HandleCameraZoom()
     {
-        Vector3 camLocalPos = cameraTransform.localPosition;
-        float targetZ = -defaultZoom;
+        if (playerCam == null) return;
 
-        if (Input.GetMouseButton(1))
-            targetZ = -minZoom; // Zoom in
-
-        camLocalPos.z = Mathf.Lerp(camLocalPos.z, targetZ, Time.deltaTime * zoomSpeed);
-        cameraTransform.localPosition = camLocalPos;
+        float targetFOV = Input.GetMouseButton(1) ? zoomFOV : defaultFOV;
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, targetFOV, Time.deltaTime * fovZoomSpeed);
     }
-
 
     void HandleCameraRoll()
     {
