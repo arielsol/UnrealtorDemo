@@ -14,9 +14,9 @@ TagManager:
   - VignetteLeft
   - VignetteRight
   - Player
-  - PickupItem
+  - PickupItemTypeA
   - PlacementZone
-  - 
+  - PickupItemTypeB
   - 
   - 
   - 

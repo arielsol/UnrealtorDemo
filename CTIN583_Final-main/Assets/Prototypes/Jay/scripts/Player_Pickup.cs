@@ -7,10 +7,14 @@ public class PlayerPickup : MonoBehaviour
     public Transform holdPoint; // e.g. empty GameObject in front of camera
 
     [Header("Layer Masks")]
-    public LayerMask itemLayer;
+    public LayerMask itemLayerA;
+    public LayerMask itemLayerB;
     public LayerMask placementZoneLayer;
 
     private GameObject heldItem = null;
+    private ItemType heldItemType;
+
+    private enum ItemType { None, TypeA, TypeB }
 
     void Update()
     {
@@ -25,64 +29,101 @@ public class PlayerPickup : MonoBehaviour
                 TryPlaceItem();
             }
         }
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * pickupRange, Color.red);
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            DropItem();
+        }
+
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * pickupRange, Color.red);
     }
 
     void TryPickupItem()
     {
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, itemLayer))
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, pickupRange, itemLayerA))
         {
-            Debug.Log("🎯 Ray hit: " + hit.collider.name);
-
-            GameObject item = hit.collider.gameObject;
-            Rigidbody rb = item.GetComponent<Rigidbody>();
-
-            if (rb == null)
-            {
-                Debug.LogWarning("❌ No Rigidbody on " + item.name);
-                return;
-            }
-
-            //rb.isKinematic = true;
-
-            item.transform.SetParent(holdPoint);
-            item.transform.localPosition = Vector3.zero;
-            item.transform.localRotation = Quaternion.identity;
-
-            heldItem = item;
-            Debug.Log("👐 Picked up: " + item.name);
+            Pickup(hit.collider.gameObject, ItemType.TypeA);
+        }
+        else if (Physics.Raycast(ray, out hit, pickupRange, itemLayerB))
+        {
+            Pickup(hit.collider.gameObject, ItemType.TypeB);
         }
         else
         {
-            Debug.Log("❌ No object hit in pickup range.");
+            Debug.Log("❌ No item detected in pickup range.");
         }
     }
 
+    void Pickup(GameObject item, ItemType type)
+    {
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        if (rb == null) return;
+
+        rb.isKinematic = true;
+        rb.useGravity = false;
+
+        item.transform.SetParent(holdPoint);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+
+        heldItem = item;
+        heldItemType = type;
+
+        Debug.Log("👐 Picked up " + type + ": " + item.name);
+    }
 
     void TryPlaceItem()
     {
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, placementZoneLayer))
         {
+            // Only allow placement if holding TypeA
+            if (heldItemType != ItemType.TypeA)
+            {
+                Debug.Log("❌ Cannot place this item type here.");
+                return;
+            }
+
             Transform placeTarget = hit.collider.transform;
 
-            // Unparent and move to placement target
             heldItem.transform.SetParent(null);
             heldItem.transform.position = placeTarget.position;
             heldItem.transform.rotation = placeTarget.rotation;
 
-            // Re-enable physics
             Rigidbody rb = heldItem.GetComponent<Rigidbody>();
-            //if (rb) rb.isKinematic = false;
+            rb.isKinematic = true;  // Stay in place, no bounce
+            rb.useGravity = false;
 
             Debug.Log("📦 Placed at: " + placeTarget.name);
             heldItem = null;
+            heldItemType = ItemType.None;
         }
         else
         {
-            Debug.Log("❌ Not looking at valid placement zone.");
+            Debug.Log("❌ Not looking at a valid placement zone.");
         }
+    }
+
+    void DropItem()
+    {
+        if (heldItem == null) return;
+
+        heldItem.transform.SetParent(null);
+
+        Rigidbody rb = heldItem.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            //rb.AddForce(Camera.main.transform.forward * 2f, ForceMode.Impulse);
+        }
+
+        Debug.Log("📤 Dropped: " + heldItem.name);
+
+        heldItem = null;
+        heldItemType = ItemType.None;
     }
 }
