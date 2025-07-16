@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerPickup : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerPickup : MonoBehaviour
     public LayerMask placementZoneLayer;
 
     private GameObject heldItem = null;
+    private Vector3 originalScale;
     private ItemType heldItemType;
 
     private enum ItemType { None, TypeA, TypeB }
@@ -65,6 +67,8 @@ public class PlayerPickup : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
 
+        originalScale = item.transform.localScale;
+
         item.transform.SetParent(holdPoint);
         item.transform.localPosition = Vector3.zero;
         item.transform.localRotation = Quaternion.identity;
@@ -92,9 +96,10 @@ public class PlayerPickup : MonoBehaviour
             heldItem.transform.SetParent(null);
             heldItem.transform.position = placeTarget.position;
             heldItem.transform.rotation = placeTarget.rotation;
+            heldItem.transform.localScale = originalScale;
 
             Rigidbody rb = heldItem.GetComponent<Rigidbody>();
-            rb.isKinematic = true;  // Stay in place, no bounce
+            rb.isKinematic = true;
             rb.useGravity = false;
 
             Debug.Log("📦 Placed at: " + placeTarget.name);
@@ -112,18 +117,37 @@ public class PlayerPickup : MonoBehaviour
         if (heldItem == null) return;
 
         heldItem.transform.SetParent(null);
-
-        Rigidbody rb = heldItem.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            //rb.AddForce(Camera.main.transform.forward * 2f, ForceMode.Impulse);
-        }
+        heldItem.transform.localScale = originalScale;
+        StartCoroutine(DropAndFreeze(heldItem));
 
         Debug.Log("📤 Dropped: " + heldItem.name);
 
         heldItem = null;
         heldItemType = ItemType.None;
+    }
+
+    IEnumerator DropAndFreeze(GameObject item)
+    {
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        if (rb == null) yield break;
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        // Wait until the item stops moving and is grounded
+        while (rb.linearVelocity.magnitude > 0.05f || !IsGrounded(item))
+        {
+            yield return null;
+        }
+
+        rb.isKinematic = true;
+        rb.useGravity = false;
+    }
+
+    bool IsGrounded(GameObject obj)
+    {
+        return Physics.Raycast(obj.transform.position, Vector3.down, out RaycastHit hit, 0.1f);
     }
 }
