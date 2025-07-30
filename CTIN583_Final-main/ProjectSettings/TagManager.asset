@@ -19,8 +19,8 @@ TagManager:
   - PickupItemTypeA
   - PlacementZone
   - PickupItemTypeB
-  - 
-  - 
+  - VisibleToPlayerA
+  - VisibleToPlayerB
   - 
   - 
   - 

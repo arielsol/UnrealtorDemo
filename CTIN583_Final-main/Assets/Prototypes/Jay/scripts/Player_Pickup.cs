@@ -5,12 +5,15 @@ public class PlayerPickup : MonoBehaviour
 {
     [Header("Pickup Settings")]
     public float pickupRange = 5f;
-    public Transform holdPoint; // e.g. empty GameObject in front of camera
+    public Transform holdPoint;
 
     [Header("Layer Masks")]
     public LayerMask itemLayerA;
     public LayerMask itemLayerB;
     public LayerMask placementZoneLayer;
+
+    [Header("Camera")]
+    public Camera playerCamera;
 
     private GameObject heldItem = null;
     private Vector3 originalScale;
@@ -37,12 +40,12 @@ public class PlayerPickup : MonoBehaviour
             DropItem();
         }
 
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * pickupRange, Color.red);
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * pickupRange, Color.red);
     }
 
     void TryPickupItem()
     {
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, pickupRange, itemLayerA))
@@ -81,10 +84,9 @@ public class PlayerPickup : MonoBehaviour
 
     void TryPlaceItem()
     {
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, pickupRange, placementZoneLayer))
         {
-            // Only allow placement if holding TypeA
             if (heldItemType != ItemType.TypeA)
             {
                 Debug.Log("❌ Cannot place this item type here.");
@@ -136,7 +138,6 @@ public class PlayerPickup : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // Wait until the item stops moving and is grounded
         while (rb.linearVelocity.magnitude > 0.05f || !IsGrounded(item))
         {
             yield return null;
@@ -148,6 +149,6 @@ public class PlayerPickup : MonoBehaviour
 
     bool IsGrounded(GameObject obj)
     {
-        return Physics.Raycast(obj.transform.position, Vector3.down, out RaycastHit hit, 0.1f);
+        return Physics.Raycast(obj.transform.position, Vector3.down, out _, 0.1f);
     }
 }
