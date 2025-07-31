@@ -77,7 +77,7 @@ public class PlayerGazeTimerTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Player1") || other.CompareTag("Player2"))
         {
             playerInside = true;
             currentPlayer = other.transform;
@@ -98,7 +98,7 @@ public class PlayerGazeTimerTrigger : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && other.transform == currentPlayer)
+        if ((other.CompareTag("Player") || other.CompareTag("Player1") || other.CompareTag("Player2")) && other.transform == currentPlayer)
         {
             playerInside = false;
             currentPlayer = null;
